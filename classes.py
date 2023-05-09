@@ -54,6 +54,19 @@ class Ranking:
         self.calculate_total_points(athlete)
         self.rank_athletes()
 
+    # def update_athlete_scores(self, athlete_name, event_name):
+    #     with open('data.txt', 'r') as f:
+    #         lines = f.readlines()
+    #     for line in lines:
+    #         data = line.strip().split(',')
+    #         if data[0] == event_name:
+    #             points_for_1st = int(data[1])
+    #             points_for_2nd = int(data[2])
+    #             points_for_3rd = int(data[3])
+    #             athlete_scores = {}
+    #             athlete_scores[athlete_name] = [points_for_1st, points_for_2nd, points_for_3rd]
+    #             self.update_event_scores(event_name, athlete_scores)
+
     def calculate_total_points(self, athlete):
         athlete.total_points = sum(self.calculate_event_points(s[0], s[1]) for s in athlete.scores)
 
