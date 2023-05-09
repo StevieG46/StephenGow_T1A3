@@ -1,4 +1,5 @@
 import classes
+import os
 
 ranking = classes.Ranking()
 
@@ -20,6 +21,22 @@ while True:
 
     query = input("Enter a name or rank to search for an athlete, or 'quit' to exit: ")
     if query.lower() == "quit":
+        ranking.save_data()  # save event data to the file
+        ranking.save_athlete_data() # save athlete data to text file
         break
     else:
         ranking.search_athlete(query)
+
+user_input = input("Do you want to see the list of current events? (yes/no) ")
+
+# Check user input and print events
+if user_input.lower() == "yes":
+    with open("data.txt", "r") as file:
+        events = []
+        for line in file:
+            data = line.strip().split(",")
+            if data[0] not in events:
+                events.append(data[0])
+        print("Current Events:")
+        for event in events:
+            print("- " + event)

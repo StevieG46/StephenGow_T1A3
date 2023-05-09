@@ -93,3 +93,15 @@ class Ranking:
     def calculate_points_to_first(self, athlete):
         first_place_points = self.athletes[0].total_points
         return first_place_points - athlete.total_points
+    
+    def save_data(self):
+        with open('data.txt', 'a') as f:
+            for event in self.events:
+                f.write(event.name + ',' + str(event.points[0]) + ',' + str(event.points[1]) + ',' + str(event.points[2]) + '\n')
+
+    def save_athlete_data(self):
+        with open('athlete.txt', 'a') as f:
+            for athlete in self.athletes:
+                f.write(athlete.name + ',' + str(athlete.total_points) + ',' + str(athlete.rank) + '\n')
+                for score in athlete.scores:
+                    f.write(score[0] + ',' + str(score[1]) + '\n')
