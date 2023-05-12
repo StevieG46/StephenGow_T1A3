@@ -20,7 +20,12 @@ while True:
     elif user_type.lower() == "athlete":
         athlete_name = input("Enter your name: ")
         event_name = input("Enter the name of the event: ")
-        score = int(input("Enter your score (1, 2 or 3)s: "))
+        while True:
+            try:
+                score = int(input("Enter your score (1, 2 or 3): "))
+                break
+            except (ValueError, KeyError, NameError):
+                print("Please enter '1' for 1st, '2' for 2nd or '3' for 3rd.")
         ranking.update_athlete_scores(athlete_name, event_name, score)
     else:
         print("Invalid user type. Please try again.")
