@@ -1,15 +1,16 @@
 import classes
 import os
+from colored import fg, bg, attr
 
 ranking = classes.Ranking()
 
 while True:
-    user_type = input("Are you an event organiser or an athlete? ")
+    user_type = input(f"{fg(234)}{bg(136)}Are you an event organiser or an athlete? {attr(0)}")
     if user_type.lower() == "event organiser":
-        event_name = input("Enter the name of the event: ")
-        points_for_1st = int(input("Enter the points for 1st place: "))
-        points_for_2nd = int(input("Enter the points for 2nd place: "))
-        points_for_3rd = int(input("Enter the points for 3rd place: "))
+        event_name = input(f"{fg(94)}{bg(0)}Enter the name of the event: {attr(0)}")
+        points_for_1st = int(input(f"{fg(142)}{bg(0)}Enter the points for 1st place: {attr(0)}"))
+        points_for_2nd = int(input(f"{fg(231)}{bg(0)}Enter the points for 2nd place: {attr(0)}"))
+        points_for_3rd = int(input(f"{fg(94)}{bg(0)}Enter the points for 3rd place: {attr(0)}"))
         ranking.add_event(event_name, points_for_1st, points_for_2nd, points_for_3rd)
     elif user_type.lower() == "athlete":
         athlete_name = input("Enter your name: ")
@@ -19,7 +20,7 @@ while True:
     else:
         print("Invalid user type. Please try again.")
 
-    query = input("Enter a name or rank to search for an athlete, or 'quit' to exit: ")
+    query = input("Enter a name or rank to search for an athlete, 'quit' to exit or press 'enter' to add new event or athlete: ")
     if query.lower() == "quit":
         ranking.save_data()  # save event data to the file
         ranking.save_athlete_data() # save athlete data to text file
