@@ -16,10 +16,12 @@ class Ranking:
         self.events = []
         self.athletes = []
 
+    # Adds new event with points.
     def add_event(self, event_name, points_for_1st, points_for_2nd, points_for_3rd):
         event = Event(event_name, points_for_1st, points_for_2nd, points_for_3rd)
         self.events.append(event)
 
+    # Updates event scores for athletes and recalculates total points and rankings.
     def update_event_scores(self, event_name, athlete_scores):
         event = next((e for e in self.events if e.name == event_name), None)
         if event is not None:
@@ -33,12 +35,14 @@ class Ranking:
                 self.calculate_total_points(athlete)
             self.rank_athletes()
 
+    # Adds new athlete
     def add_athlete(self, athlete_name):
         athlete = next((a for a in self.athletes if a.name == athlete_name), None)
         if athlete is None:
             athlete = Athlete(athlete_name)
             self.athletes.append(athlete)
    
+#   Updates an athlete's score for a specific event and recalculates their total points, as well as ranking the list of athletes based on their new point totals.
     def update_athlete_scores(self, athlete_name, event_name, score):
         athlete = next((a for a in self.athletes if a.name == athlete_name), None)
         if athlete is None:
@@ -54,22 +58,11 @@ class Ranking:
         self.calculate_total_points(athlete)
         self.rank_athletes()
 
-    # def update_athlete_scores(self, athlete_name, event_name):
-    #     with open('data.txt', 'r') as f:
-    #         lines = f.readlines()
-    #     for line in lines:
-    #         data = line.strip().split(',')
-    #         if data[0] == event_name:
-    #             points_for_1st = int(data[1])
-    #             points_for_2nd = int(data[2])
-    #             points_for_3rd = int(data[3])
-    #             athlete_scores = {}
-    #             athlete_scores[athlete_name] = [points_for_1st, points_for_2nd, points_for_3rd]
-    #             self.update_event_scores(event_name, athlete_scores)
-
+    # Calculate the total points earned by athlete using sum.
     def calculate_total_points(self, athlete):
         athlete.total_points = sum(self.calculate_event_points(s[0], s[1]) for s in athlete.scores)
 
+    # Determine the points earned by an athlete for a specific event based on their score and the event's point values
     def calculate_event_points(self, event_name, score):
         event = next((e for e in self.events if e.name == event_name), None)
         if event is not None:
@@ -81,11 +74,13 @@ class Ranking:
                 return event.points[2]
         return 0
 
+    # Sorts atheltes by total points in descending order and adds a rank based on order.
     def rank_athletes(self):
         ranked_athletes = sorted(self.athletes, key=lambda a: a.total_points, reverse=True)
         for i, athlete in enumerate(ranked_athletes):
             athlete.rank = i + 1
 
+    # Search an athlete, either by name or rank.
     def search_athlete(self, query):
         try:
             rank = int(query)
@@ -103,15 +98,18 @@ class Ranking:
         else:
             print("Athlete not found.")
 
+    #  Calculates the difference in total points between the given athlete and the athlete in first place, and returns the result
     def calculate_points_to_first(self, athlete):
         first_place_points = self.athletes[0].total_points
         return first_place_points - athlete.total_points
     
+    # saves event data, name and points into txt file.
     def save_data(self):
         with open('data.txt', 'a') as f:
             for event in self.events:
                 f.write(event.name + ',' + str(event.points[0]) + ',' + str(event.points[1]) + ',' + str(event.points[2]) + '\n')
 
+    # saves athlete data, name, points and rank in txt file.
     def save_athlete_data(self):
         with open('athlete.txt', 'a') as f:
             for athlete in self.athletes:
