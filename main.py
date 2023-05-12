@@ -8,9 +8,14 @@ while True:
     user_type = input(f"{fg(234)}{bg(136)}Are you an event organiser or an athlete? {attr(0)}")
     if user_type.lower() == "event organiser":
         event_name = input(f"{fg(94)}{bg(0)}Enter the name of the event: {attr(0)}")
-        points_for_1st = int(input(f"{fg(142)}{bg(0)}Enter the points for 1st place: {attr(0)}"))
-        points_for_2nd = int(input(f"{fg(231)}{bg(0)}Enter the points for 2nd place: {attr(0)}"))
-        points_for_3rd = int(input(f"{fg(94)}{bg(0)}Enter the points for 3rd place: {attr(0)}"))
+        while True:
+            try:
+                points_for_1st = int(input(f"{fg(142)}{bg(0)}Enter the points for 1st place: {attr(0)}"))
+                points_for_2nd = int(input(f"{fg(231)}{bg(0)}Enter the points for 2nd place: {attr(0)}"))
+                points_for_3rd = int(input(f"{fg(94)}{bg(0)}Enter the points for 3rd place: {attr(0)}"))
+                break  # exit the loop if valid input is entered
+            except (ValueError, KeyError, NameError):
+                print("Please enter a valid number")
         ranking.add_event(event_name, points_for_1st, points_for_2nd, points_for_3rd)
     elif user_type.lower() == "athlete":
         athlete_name = input("Enter your name: ")
